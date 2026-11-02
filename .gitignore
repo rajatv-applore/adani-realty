@@ -20,3 +20,9 @@ renders/*
 
 # Downloaded CC0 render assets (re-fetch with `npm run assets`)
 blender/assets/
+docs/North-Park-3D-Build-Guide-BD.docx
+.gitignore
+docs/North-Park-Home-Progress-Proposal.docx
+.gitignore
+.gitignore
+docs/~$rth-Park-Home-Progress-Proposal.docx

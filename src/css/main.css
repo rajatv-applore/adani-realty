@@ -445,6 +445,26 @@ main.layout{display:grid;grid-template-columns:minmax(0,1.95fr) minmax(336px,1fr
 .villa-back svg{width:15px;height:15px;color:var(--purple);}
 .res .eyebrow b{color:var(--magenta);font-weight:700;}
 
+/* ---------- ONLY BUILDING (clean view): hide every overlay except the toggle ---------- */
+#cleanViewBtn{padding:7px 9px;}
+#cleanViewBtn .cv-show,#cleanViewBtn .cv-label{display:none;}
+#cleanViewBtn[aria-pressed="true"]{padding:7px 13px;}
+#cleanViewBtn[aria-pressed="true"] .cv-hide{display:none;}
+#cleanViewBtn[aria-pressed="true"] .cv-show,#cleanViewBtn[aria-pressed="true"] .cv-label{display:inline;}
+.scene-wrap.clean-view .scene-hud > *:not(.hud-actions),
+.scene-wrap.clean-view .hud-actions > *:not(#cleanViewBtn){opacity:0!important;visibility:hidden;pointer-events:none!important;transition:opacity 220ms var(--ease),visibility 0s linear 220ms;}
+
+/* ---------- FULL SCREEN (immersive 3D) ---------- */
+#fullscreenBtn .fs-exit{display:none;}
+.app:not(.is-full) #fullscreenBtn{padding:7px 9px;}
+.app:not(.is-full) #fullscreenBtn .fs-label{display:none;}   /* icon-only in the framed view, saves toolbar space */
+#fullscreenBtn[aria-pressed="true"] .fs-enter{display:none;}
+#fullscreenBtn[aria-pressed="true"] .fs-exit{display:inline;}
+.app.is-full{position:fixed;inset:0;z-index:100;width:100%;max-width:none;height:100%;min-height:0;border-radius:0;border:0;box-shadow:none;grid-template-rows:1fr;}
+.app.is-full header.bar,.app.is-full .rail{display:none;}
+.app.is-full main.layout{grid-template-columns:1fr;}
+.app.is-full .scene-wrap{margin:0;border-radius:0;box-shadow:none;min-height:0;}
+
 @media (max-width:980px){
   .screen{height:auto;min-height:calc(100dvh - 32px);}
   .login-screen{flex-direction:column;}

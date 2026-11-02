@@ -10,7 +10,7 @@
     gid("searchScreen").style.display=id==="search"?"flex":"none";
     gid("app").style.display=id==="villa"?"grid":"none";
   }
-  function closeAndReset(){ try{ if(typeof closeZone==="function") closeZone(); }catch(_){ } if(typeof window.__resetControls==="function") window.__resetControls(); }
+  function closeAndReset(){ try{ if(typeof closeZone==="function") closeZone(); }catch(_){ } if(typeof window.__resetControls==="function") window.__resetControls(); if(typeof window.__exitFullscreen==="function") window.__exitFullscreen(); }
 
   /* ---- login ---- */
   gid("loginForm").addEventListener("submit",e=>{

@@ -25,11 +25,13 @@ function openZone(id){const z=villaData.zones[id];if(!z)return;activeZone=id;
     el.addEventListener("keydown",e=>{if(e.target.closest(".sel-action"))return;if(e.key==="Enter"||e.key===" "){e.preventDefault();tg();}});});
   $("#drawerBody").querySelectorAll(".sel-action").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const it=b.closest(".sel-item");it.classList.add("reviewed");b.classList.add("reviewed");b.textContent="Reviewed";}));
   drawer.classList.add("show");scrim.classList.add("show");drawer.setAttribute("aria-hidden","false");
-  lastFocus=document.activeElement;$("#drawerClose").focus();
+  /* preventScroll: the drawer is still off-screen (sliding in) at this moment, and a plain focus()
+     scrolls the overflow-hidden .app sideways to reveal it, shifting the whole layout */
+  lastFocus=document.activeElement;$("#drawerClose").focus({preventScroll:true});$("#app").scrollLeft=0;
 }
 function closeZone(){drawer.classList.remove("show");scrim.classList.remove("show");drawer.setAttribute("aria-hidden","true");
   $("#sceneWrap").classList.remove("has-sel");document.querySelectorAll(".hotspot").forEach(h=>h.classList.remove("active"));
-  if(scene3d) scene3d.select(null);activeZone=null;if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+  if(scene3d) scene3d.select(null);activeZone=null;if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});}
 const drawer=$("#drawer"),scrim=$("#scrim");
 $("#drawerClose").addEventListener("click",closeZone);scrim.addEventListener("click",closeZone);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(drawer.classList.contains("show"))closeZone();else document.querySelectorAll(".tl-item.sel").forEach(i=>{i.classList.remove("sel");i.setAttribute("aria-expanded","false");});}});

@@ -178,7 +178,7 @@ async function buildScene(){
   function updateHotspots(){const w=host.clientWidth,h=host.clientHeight;const vp=camera.viewport.toGlobal(w,h);const tm=scene.getTransformMatrix();Object.keys(anchors).forEach(id=>{const p=BABYLON.Vector3.Project(anchors[id],BABYLON.Matrix.Identity(),tm,vp);const behind=p.z<0||p.z>1;const el=hud.querySelector('.hotspot[data-for="'+id+'"]');el.style.transform="translate(-50%,-50%) translate("+p.x+"px,"+p.y+"px)";el.style.opacity=behind?0:"";el.style.pointerEvents=behind?"none":"auto";});}
 
   /* ---- picking ---- */
-  scene.onPointerObservable.add(pi=>{if(pi.type!==BABYLON.PointerEventTypes.POINTERTAP)return;const pick=pi.pickInfo;if(pick&&pick.hit&&pick.pickedMesh&&pick.pickedMesh.__zone){camera.useAutoRotationBehavior=false;openZone(pick.pickedMesh.__zone);}});
+  scene.onPointerObservable.add(pi=>{if(pi.type!==BABYLON.PointerEventTypes.POINTERTAP)return;if(host.closest(".clean-view"))return;const pick=pi.pickInfo;if(pick&&pick.hit&&pick.pickedMesh&&pick.pickedMesh.__zone){camera.useAutoRotationBehavior=false;openZone(pick.pickedMesh.__zone);}});
 
   /* ---- camera presets + floor explorer + reveal + evening ---- */
   const T=(x,y,z)=>[x,z,-y];   // Blender point -> Babylon target array
