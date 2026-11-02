@@ -1,0 +1,17 @@
+{
+  "name": "adani-villa-progress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Adani Realty \u00b7 The North Park \u2014 interactive 3D villa construction-progress experience with an optional Blender photoreal render service.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start": "node server/server.js",
+    "dev": "node scripts/build.js && node server/server.js",
+    "assets": "python3 blender/fetch_assets.py",
+    "export:web": "/Applications/Blender.app/Contents/MacOS/Blender -b -P blender/villa_render.py -- --out /dev/null --export-web src/assets/villa",
+    "deploy": "node scripts/build.js && cd dist && vercel --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,11 @@
+/* ============================================================
+   FONTS · bundled offline, inlined as data URIs at build time
+   ============================================================ */
+/* ---- Archivo (body) + Outfit (display) · SIL OFL 1.1 ---- */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:400 700;font-display:swap;src:url('../fonts/archivo.woff2') format('woff2');}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:300 600;font-display:swap;src:url('../fonts/outfit.woff2') format('woff2');}
+/* ---- Poppins · fallback face ---- */
+@font-face{font-family:'Poppins';font-weight:400;font-style:normal;font-display:swap;src:url('../fonts/poppins-400.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:500;font-style:normal;font-display:swap;src:url('../fonts/poppins-500.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:600;font-style:normal;font-display:swap;src:url('../fonts/poppins-600.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:700;font-style:normal;font-display:swap;src:url('../fonts/poppins-700.woff2') format('woff2');}

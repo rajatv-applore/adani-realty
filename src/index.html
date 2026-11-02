@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Adani Realty · Villa No. 08</title>
+<link rel="stylesheet" href="css/fonts.css" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== SCREEN 1 · LOGIN ===== -->
+  <div class="screen login-screen" id="loginScreen">
+    <div class="login-aside">
+      <div class="la-brand"><span class="la-a grad-text">adani</span><span class="la-r">Realty</span><span class="la-beyond">PRESENTS · bey<span class="la-o"></span>nd</span></div>
+      <div class="la-mid">
+        <div class="la-eyebrow">RELATIONSHIP MANAGER PORTAL</div>
+        <h1 class="la-title">Your home,<br>taking shape.</h1>
+        <p class="la-sub">A closer look at the making of every North Park residence, construction progress, interior finishes and milestones, in one considered experience.</p>
+      </div>
+      <div class="la-foot">THE NORTH PARK · SHANTIGRAM, AHMEDABAD</div>
+    </div>
+    <div class="login-form">
+      <span class="demo-chip"><span class="d"></span>ILLUSTRATIVE EXPERIENCE</span>
+      <h2>Sign in</h2>
+      <p class="lf-sub">Use your Adani Realty credentials to continue to the villa directory.</p>
+      <form id="loginForm" novalidate>
+        <label class="lf-label">Work email<input type="email" id="loginEmail" placeholder="name@adani.com" autocomplete="username"></label>
+        <label class="lf-label">Password<input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></label>
+        <div class="lf-row"><label class="lf-check"><input type="checkbox" checked> Keep me signed in</label><button type="button" class="lf-link">Need help?</button></div>
+        <button type="submit" class="lf-btn">Sign in</button>
+      </form>
+      <div class="lf-note">Demonstration portal, any details continue to the directory. No credentials are stored or sent anywhere.</div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2 · VILLA DIRECTORY / SEARCH ===== -->
+  <div class="screen search-screen" id="searchScreen">
+    <header class="sb-head">
+      <div class="brand">
+        <div class="logo"><span class="a grad-text">adani</span><span class="r">Realty</span></div>
+        <span class="sep"></span>
+        <div class="sb-portal">RELATIONSHIP MANAGER PORTAL</div>
+      </div>
+      <div class="sb-user">
+        <span class="sb-avatar" id="sbAvatar">RM</span>
+        <span class="sb-name" id="sbName">Relationship Manager</span>
+        <button class="sb-signout" id="signOut">Sign out</button>
+      </div>
+    </header>
+    <div class="sb-body">
+      <div class="sb-intro">
+        <h1>Villa directory</h1>
+        <p>Search a client's residence to open their progress experience.</p>
+      </div>
+      <div class="sb-filters">
+        <label class="sbf grow">Client name<input type="text" id="fClient" placeholder="Search by client name or villa no."></label>
+        <label class="sbf">Project<select id="fProject"><option value="all">All projects</option><option>The North Park</option></select></label>
+        <label class="sbf">Villa type<select id="fType"><option value="all">All types</option><option>4 BHK Villa</option><option>5 BHK Villa</option><option>6 BHK Villa</option></select></label>
+        <label class="sbf">Location<select id="fLocation"><option value="all">All locations</option><option>Shantigram, Ahmedabad</option></select></label>
+        <button class="sb-search" id="doSearch"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Search</button>
+      </div>
+      <div class="sb-count" id="sbCount"></div>
+      <div class="sb-results" id="sbResults"></div>
+    </div>
+  </div>
+
+<div class="app screen" id="app" style="display:none">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="bar">
+    <div class="brand">
+      <button class="villa-back" id="villaBack" aria-label="Back to the villa directory"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Directory</button>
+      <div class="logo">
+        <span class="a grad-text">adani</span>
+        <span class="r">Realty</span>
+      </div>
+      <span class="sep"></span>
+      <div class="beyond">
+        <span class="p">PRESENTS</span>
+        <span class="b">bey<span class="o"></span>nd</span>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-name grad-text">THE NORTH PARK</div>
+      <div class="proj-loc">SHANTIGRAM · AHMEDABAD</div>
+    </div>
+    <div class="res">
+      <span class="demo-chip" title="This experience uses illustrative demonstration data, not live construction records."><span class="d"></span>ILLUSTRATIVE EXPERIENCE</span>
+      <div class="r-main">
+        <div class="eyebrow">Presented for <b id="villaClient"></b></div>
+        <div class="t" id="resTitle">Villa No. 08</div>
+        <div class="l" id="resLoc">The North Park · Shantigram, Ahmedabad</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="layout">
+    <!-- 3D STAGE -->
+    <section class="scene-wrap" id="sceneWrap" aria-label="Interactive 3D villa">
+      <div id="scene3d"></div>
+      <div class="scene-hud">
+        <div class="hud-hint"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="2"/></svg>Drag to explore · tap a zone</div>
+        <div class="hud-actions">
+          <button class="hud-reset" id="revealBtn" aria-pressed="false" aria-label="Explore the construction layers"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Explore construction</button>
+          <button class="hud-reset" id="eveningBtn" aria-pressed="false" aria-label="Toggle day and evening lighting"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.8A8 8 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Evening</button>
+          <button class="hud-reset" id="renderBtn" aria-label="Create a photoreal Blender render"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.2-1.6A1 1 0 0 1 10 4h4a1 1 0 0 1 .8.4L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="3.2" stroke="currentColor" stroke-width="2"/></svg>Photoreal</button>
+          <button class="hud-reset" id="resetView" aria-label="Reset the 3D view"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9a8 8 0 0 1 13.7-3.3L20 8M20 4v4h-4M20 15a8 8 0 0 1-13.7 3.3L4 16M4 20v-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reset view</button>
+        </div>
+
+        <!-- floor-by-floor explorer -->
+        <div class="floor-nav" id="floorNav" role="group" aria-label="Explore your home floor by floor">
+          <div class="fn-title">Explore by floor</div>
+          <button class="fn-btn" data-floor="terrace">Terrace</button>
+          <button class="fn-btn" data-floor="firstFloor">First Floor</button>
+          <button class="fn-btn" data-floor="groundFloor">Ground Floor</button>
+          <button class="fn-btn" data-floor="basement">Basement</button>
+          <button class="fn-btn fn-full" data-floor="" disabled>Full villa</button>
+        </div>
+
+        <!-- camera view presets -->
+        <div class="view-presets" id="viewPresets" role="group" aria-label="Camera views">
+          <button class="vp-btn active" data-view="overall">Overall</button>
+          <button class="vp-btn" data-view="front">Front</button>
+          <button class="vp-btn" data-view="rear">Rear</button>
+          <button class="vp-btn" data-view="garden">Garden</button>
+          <button class="vp-btn" data-view="terrace">Terrace</button>
+        </div>
+
+        <!-- completion chip -->
+        <div class="comp">
+          <div class="ringwrap">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <defs><linearGradient id="adaniGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3E9BA6"/><stop offset="0.4" stop-color="#4B82CE"/><stop offset="0.72" stop-color="#7261B4"/><stop offset="1" stop-color="#B24F8E"/></linearGradient></defs>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#EEF0F6" stroke-width="8"/>
+              <circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="url(#adaniGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+            <div class="rn"><b id="ringBig">68</b><span>PERCENT</span></div>
+          </div>
+          <div class="ctxt">
+            <div class="e grad-text">OVERALL PROGRESS</div>
+            <h2 id="compHead">This home is 68% complete</h2>
+            <p>Your home is taking shape, with finishing work progressing across key areas.</p>
+            <div class="asof">As of 29 Oct 2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT RAIL -->
+    <aside class="rail" aria-label="Villa progress summary">
+      <div class="legend">
+        <h3>Status at a glance</h3>
+        <div class="rows">
+          <div class="row"><span class="mk mk-ontrack"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l4 4 10-11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">On track</span><span class="desc">Progressing to plan</span></div>
+          <div class="row"><span class="mk mk-delayed"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17" r="1.4" fill="currentColor"/></svg></span><span class="lbl">Delayed</span><span class="desc">Needs more time</span></div>
+          <div class="row"><span class="mk mk-completed"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">Completed</span><span class="desc">Finished &amp; ready</span></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="attention" id="attention">
+        <h3>Your attention</h3>
+        <div class="att-sub"><b id="attCount">0</b> selections awaiting your preference</div>
+        <div class="att-list" id="attList"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="timeline">
+        <h3>Your journey</h3>
+        <div class="tl-list" id="tlList"></div>
+      </div>
+      <div class="demo-foot"><span class="d"></span>Illustrative experience, demonstration data, not live construction records.</div>
+    </aside>
+  </main>
+
+  <!-- ===== ZONE DRAWER ===== -->
+  <div class="scrim" id="scrim"></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+    <div class="drawer-head">
+      <button class="drawer-close" id="drawerClose" aria-label="Close zone details"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <div class="e" id="drawerEyebrow">Your residence · Villa No. 08</div>
+      <h2 id="drawerTitle">Zone</h2>
+      <div class="sub" id="drawerSub"></div>
+      <div class="pct"><b id="drawerPct">0</b><span>percent complete</span></div>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
+  <!-- ===== PHOTOREAL RENDER MODAL ===== -->
+  <div class="render-modal" id="renderModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rmTitle">
+    <div class="rm-panel">
+      <button class="rm-close" id="rmClose" aria-label="Close render panel"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <div class="rm-head">
+        <div class="e grad-text">BLENDER · PHOTOREAL STUDIO</div>
+        <h2 id="rmTitle">Studio render</h2>
+        <p>Generate a photorealistic still of your villa with Blender (Cycles path-tracing), rendered from the live project data. The interactive 3D view stays available.</p>
+      </div>
+      <div class="rm-body">
+        <div class="rm-note" id="rmNote" style="display:none;"></div>
+        <div class="rm-controls">
+          <label>View<select id="rmView"><option value="hero">Hero 3/4</option><option value="front">Front</option><option value="aerial">Aerial</option><option value="pool">Rear garden</option></select></label>
+          <label>Engine<select id="rmEngine"><option value="CYCLES">Cycles (photoreal)</option><option value="EEVEE">Eevee (fast)</option></select></label>
+          <label>Time<select id="rmTime"><option value="day">Day</option><option value="dusk">Evening</option></select></label>
+          <label>Quality<select id="rmSamples"><option value="32">Draft · fast</option><option value="64" selected>Standard</option><option value="128">High</option></select></label>
+        </div>
+        <button class="rm-go" id="rmGo">Generate render</button>
+        <div class="rm-status" id="rmStatus"><span class="rm-spin"></span><span class="rm-bar"><i id="rmBarI"></i></span><span id="rmMsg">Queued…</span></div>
+        <div class="rm-err" id="rmErr"></div>
+        <div class="rm-stage" id="rmStage"><img id="rmImg" alt="Photoreal villa render"/><div class="cap"><span id="rmCap"></span><a id="rmDl" download>Download PNG</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LOADER ===== -->
+  <div class="loader" id="loader">
+    <div class="lk">
+      <span class="la grad-text">adani</span>
+      <span class="lr">Realty</span>
+      <span class="lb">PREPARING YOUR RESIDENCE</span>
+    </div>
+    <div class="lbar"><i></i></div>
+  </div>
+
+</div>
+</div>
+
+<!-- Babylon.js engine (bundled locally; WebGPU + WebGL fallback) -->
+<script src="vendor/babylon.js"></script>
+
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/drawer.js"></script>
+<script src="js/render-studio.js"></script>
+<script src="js/scene-controls.js"></script>
+<script src="js/villa-assets.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

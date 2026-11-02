@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies
+node_modules/
+
+# Build output (regenerate with `npm run build`)
+dist/index.html
+
+# Vercel project link (local, per-machine)
+.vercel/
+
+# Runtime render output
+renders/*
+!renders/.gitkeep
+
+
+# Downloaded CC0 render assets (re-fetch with `npm run assets`)
+blender/assets/
