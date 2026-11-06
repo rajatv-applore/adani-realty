@@ -8,7 +8,7 @@
     "start": "node server/server.js",
     "dev": "node scripts/build.js && node server/server.js",
     "assets": "python3 blender/fetch_assets.py",
-    "export:web": "/Applications/Blender.app/Contents/MacOS/Blender -b -P blender/villa_render.py -- --out /dev/null --export-web src/assets/villa",
+    "export:web": "/Applications/Blender.app/Contents/MacOS/Blender -b -P blender/villa_render.py -- --out /dev/null --export-web src/assets/villa --model phase8 --villa-no D-28",
     "deploy": "node scripts/build.js && cd dist && npx -y vercel@latest --prod"
   },
   "engines": {

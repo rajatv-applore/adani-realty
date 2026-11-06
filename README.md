@@ -47,7 +47,9 @@ Browser (Babylon.js interactive)  ──tap "Photoreal"──►  Node render AP
 │   └── build.js                src/ → dist/index.html
 ├── assets/reference/           Architect reference renders (design reference only)
 │   ├── exterior/
-│   └── interior/
+│   ├── interior/
+│   └── adani-website/          Phase 8 master plan, unit plans (B, C, C1, D, E), brochure
+│                               pages and phase8.json (villas, room sizes, specs)
 └── renders/                    Blender output (runtime, git-ignored)
 ```
 
@@ -68,6 +70,24 @@ so a plain `npm run build` works without Blender.
 
 Edit files in `src/`, never `dist/index.html`. Append `?webgl` to the URL to force the
 WebGL backend instead of WebGPU.
+
+### Phase 8 villa (from Adani's published plans)
+
+`--model phase8` builds The North Park Phase 8 villa from the Type B unit plan and room-size
+table in `assets/reference/adani-website/`: ground + two floors, terrace garden, no basement.
+The web app (`npm run export:web`) and the render API both use it. Its zones are
+`groundFloor`, `firstFloor`, `secondFloor`, `facade`, `decks`, `landscape`, `servantsQuarter`.
+`--model legacy` (the default for a bare Blender call) is the earlier G+1 villa with a basement.
+
+```bash
+B=/Applications/Blender.app/Contents/MacOS/Blender
+$B -b -P blender/villa_render.py -- --out renders/front.png --model phase8 --view p8front --villa-no D-28
+#   --type B|C|C1        C = mirror of B, C1 = C without the servant block
+#   --palette tan|grey   facade colour scheme (neighbours alternate)
+#   --view p8front|p8left|p8aerial|p8cut
+#   --cutaway gf|ff      with --view p8cut: cut above that floor to show the layout
+#   --data zones.json    construction stage per zone (adds `secondFloor`)
+```
 
 ## Requirements
 
@@ -116,11 +136,12 @@ interactive view keeps working.
 | Method · Path | Purpose |
 |---|---|
 | `GET /api/render` | `{ blenderAvailable, blenderPath, busy, queued }` |
-| `POST /api/render` | body `{ view, engine, samples, res, zones }` → `{ jobId }` (202) |
+| `POST /api/render` | body `{ view, engine, time, villaNo, samples, res, zones }` → `{ jobId }` (202) |
 | `GET /api/render/:jobId` | `{ status, message, progress, image, error, ms }` (`status`: queued·rendering·done·error) |
 | `GET /renders/<id>.png` | the rendered image |
 
-`view` = hero·front·aerial·pool · `engine` = CYCLES·EEVEE · `samples` 16–512 ·
+`view` = hero·garden·aerial·plan-ground·plan-first (the plans are cut-away views) ·
+`villaNo` = e.g. `D-28` · `engine` = CYCLES·EEVEE · `samples` 16–512 ·
 `res` = `WxH` · `zones` = `{ groundFloor:{stage}, firstFloor:{stage}, … }` (drives
 completed/in-progress/pending appearance). Jobs run one at a time (simple queue).
 
@@ -128,16 +149,17 @@ completed/in-progress/pending appearance). Jobs run one at a time (simple queue)
 
 1. The page POSTs the current `villaData` zone stages to `/api/render`.
 2. The server writes the zones to `renders/<id>.json` and runs:
-   `blender -b -P blender/villa_render.py -- --out renders/<id>.png --engine … --data …`
-3. `villa_render.py` (`bpy`) resets to an empty scene, builds the villa, walls, floors,
-   roof, glazing, balconies, pool, landscaping, furniture, exterior lamps, assigns PBR
-   materials, a Nishita sky + sun + fill light, places a camera for the chosen view, enables
-   GPU (or CPU fallback) + denoising, and calls `bpy.ops.render.render(write_still=True)`.
+   `blender -b -P blender/villa_render.py -- --out renders/<id>.png --model phase8 --view … --data …`
+3. `villa_render.py` (`bpy`) resets to an empty scene, builds the villa (walls, floors,
+   stairs, lift, glazing, balcony, terrace garden, servant block, landscaping, furniture),
+   assigns PBR materials, lights it with a Poly Haven HDRI sky, places a camera for the chosen
+   view, enables GPU (or CPU fallback) + denoising, and renders.
 4. The PNG lands in `renders/` and is served at `/renders/<id>.png`; the page displays it.
 
-Construction stage changes the geometry/materials: e.g. a *Structure* first floor renders as
-an exposed concrete frame, *Finishing/Ready* as finished terracotta; *Foundation* zones show
-slabs/rebar.
+Construction stage changes the geometry/materials: a *Structure* floor renders as an exposed
+concrete frame with grey blockwork and scaffolding, *Finishing* as grey plaster with glazing,
+*Ready* in its final sand and charcoal finish with interiors; *Foundation* shows footings and
+starter bars.
 
 ## Deployment (server-side rendering)
 

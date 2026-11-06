@@ -50,6 +50,14 @@ function detectBlender() {
 }
 let BLENDER = detectBlender();
 
+const VIEWS = {
+  hero: { view: 'p8front' },
+  garden: { view: 'p8left' },
+  aerial: { view: 'p8aerial' },
+  'plan-ground': { view: 'p8cut', cut: 'gf' },
+  'plan-first': { view: 'p8cut', cut: 'ff' },
+};
+
 /* ---------- job store + single-worker queue ---------- */
 const jobs = new Map();           // jobId -> job
 const queue = [];
@@ -75,10 +83,13 @@ function startNext() {
   const dataFile = path.join(RENDER_DIR, id + '.json');
   try { fs.writeFileSync(dataFile, JSON.stringify({ zones: job.params.zones || {} })); } catch (_) {}
 
+  // the app's view names -> Phase 8 cameras (plans are cut-away views of one floor)
+  const view = VIEWS[job.params.view];
   const args = ['-b', '-P', SCRIPT, '--',
-    '--out', out, '--engine', job.params.engine, '--samples', String(job.params.samples),
-    '--res', job.params.res, '--view', job.params.view, '--time', job.params.time,
-    '--villa-no', job.params.villaNo, '--data', dataFile];
+    '--out', out, '--model', 'phase8', '--engine', job.params.engine, '--samples', String(job.params.samples),
+    '--res', job.params.res, '--view', view.view, '--time', job.params.time,
+    '--villa-no', job.params.villaNo, '--data', dataFile, '--neighbours', view.cut ? '0' : '1'];
+  if (view.cut) args.push('--cutaway', view.cut);
   if (job.params.forceCpu) args.push('--force-cpu');
 
   job.startedAt = Date.now();
@@ -147,10 +158,10 @@ const server = http.createServer((req, res) => {
       let b = {}; try { b = JSON.parse(body || '{}'); } catch (_) {}
       const id = crypto.randomBytes(6).toString('hex');
       const params = {
-        view: ['hero', 'front', 'aerial', 'pool'].includes(b.view) ? b.view : 'hero',
+        view: Object.prototype.hasOwnProperty.call(VIEWS, b.view) ? b.view : 'hero',
         engine: b.engine === 'EEVEE' ? 'EEVEE' : 'CYCLES',
         time: b.time === 'dusk' ? 'dusk' : 'day',
-        villaNo: /^\d{1,3}$/.test(String(b.villaNo || '')) ? String(b.villaNo).padStart(2, '0') : '08',
+        villaNo: /^[A-Z]{1,2}-\d{1,3}[A-Z]?$/i.test(String(b.villaNo || '')) ? String(b.villaNo).toUpperCase() : 'D-28',
         samples: Math.min(512, Math.max(16, parseInt(b.samples, 10) || 96)),
         res: /^\d{3,4}x\d{3,4}$/.test(b.res || '') ? b.res : '1600x1000',
         zones: (b.zones && typeof b.zones === 'object') ? b.zones : {},

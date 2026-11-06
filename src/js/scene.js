@@ -139,13 +139,13 @@ async function buildScene(){
   const STAGE_IX={Foundation:0,Structure:1,Finishing:2,Ready:3};
   const zoneGroups={},zoneMeshes={},stageMeshes=[];
   const zoneNode=id=>zoneGroups[id]||(zoneGroups[id]=new BABYLON.TransformNode(id,scene));
-  function place(mesh,tag,zone){
+  function place(mesh,tag,zone,lid){
     mesh.receiveShadows=true;sg.addShadowCaster(mesh);
-    if(/^s\d$/.test(tag)){mesh.parent=zoneNode(zone);mesh.__zone=zone;mesh.__stage=+tag[1];
+    if(/^s\d$/.test(tag)){mesh.parent=zoneNode(zone);mesh.__zone=zone;mesh.__stage=+tag[1];mesh.__lid=!!lid;
       (zoneMeshes[zone]=zoneMeshes[zone]||[]).push(mesh);stageMeshes.push(mesh);}
     else{mesh.isPickable=false;mesh.freezeWorldMatrix();}
   }
-  D.parts.forEach((p,i)=>place(boxesMesh("p"+i,p.b,p.m),p.t,p.z));
+  D.parts.forEach((p,i)=>place(boxesMesh("p"+i,p.b,p.m),p.t,p.z,p.lid));
   D.meshes.forEach((m,i)=>place(polyMesh("m"+i,m),m.t,m.z));
   const sprGroups={};
   D.instances.forEach(it=>{const k=it.a+"|"+it.t+"|"+it.z;(sprGroups[k]=sprGroups[k]||[]).push(it);});
@@ -157,46 +157,56 @@ async function buildScene(){
     place(inst,tag,zone);inst.isPickable=false;
   });
 
-  /* villa number plate on the gate pillar */
-  const plateTex=new BABYLON.DynamicTexture("plateTex",{width:256,height:256},scene,true);
+  /* villa number plate on the front wall, beside the pedestrian gate */
+  const plateTex=new BABYLON.DynamicTexture("plateTex",{width:320,height:256},scene,true);
   const plateMat=new BABYLON.PBRMaterial("plate",scene);plateMat.albedoTexture=plateTex;plateMat.roughness=0.4;plateMat.metallic=0.6;
-  const plate=BABYLON.MeshBuilder.CreatePlane("plateNo",{width:0.5,height:0.55},scene);
-  plate.material=plateMat;plate.position=V3(2.15,-6.84,1.025);plate.rotation.y=0;plate.isPickable=false;
-  function drawPlate(){const p=villaData.property,n=((p&&p.name)||"").replace(/\D/g,"")||"08";const g=plateTex.getContext();
-    g.fillStyle="#8a4b29";g.fillRect(0,0,256,256);g.fillStyle="#1a1410";g.font="600 120px Outfit, Archivo, sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(n,128,138);plateTex.update();}
+  const plate=BABYLON.MeshBuilder.CreatePlane("plateNo",{width:0.58,height:0.48},scene);
+  plate.material=plateMat;plate.position=V3(-0.1,-6.845,0.6);plate.rotation.y=0;plate.isPickable=false;
+  function drawPlate(){const p=villaData.property,n=((p&&p.name)||"").replace(/^villa\s*(no\.?\s*)?/i,"")||"D-28";const g=plateTex.getContext();
+    g.fillStyle="#8a4b29";g.fillRect(0,0,320,256);g.fillStyle="#1a1410";g.font="600 "+(n.length>4?78:96)+"px Outfit, Archivo, sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(n,160,136);plateTex.update();}
 
-  /* ---- selection ring (accent) ---- */
-  const ringCenters={basement:[-3.2,10.2,4.4],groundFloor:[0,3,14],firstFloor:[0,2,14],facade:[0,-4.8,11.5],decks:[1.8,12.6,8.5],landscape:[-3,-5,8],servantsQuarter:[-3.9,15.9,5.4]};
+  /* ---- selection ring (accent): [x, y, diameter] on the ground, Blender coordinates ---- */
+  const ringCenters={groundFloor:[0,5.5,16],firstFloor:[0,5,16],secondFloor:[0,5,12],facade:[0,-2.5,11],decks:[-1,1,11],landscape:[-3,-4.8,8],servantsQuarter:[-2,14,7]};
   const ringMat=new BABYLON.StandardMaterial("ring",scene);ringMat.emissiveColor=BABYLON.Color3.FromHexString("#B24F8E");ringMat.disableLighting=true;ringMat.specularColor=new BABYLON.Color3(0,0,0);ringMat.alpha=0.95;
   let selRing=null;
   function setRing(id){if(selRing){selRing.dispose();selRing=null;}if(!id||!ringCenters[id])return;const c=ringCenters[id];selRing=BABYLON.MeshBuilder.CreateTorus("sel",{diameter:c[2],thickness:0.14,tessellation:80},scene);selRing.material=ringMat;selRing.position=V3(c[0],c[1],0.25);selRing.isPickable=false;selRing.applyFog=false;}
 
   /* ---- hotspots (anchors in Blender coordinates) ---- */
-  const anchors={basement:V3(-3.2,10.2,0.8),groundFloor:V3(-2.4,-3.0,2.0),firstFloor:V3(2.9,-5.3,5.3),facade:V3(-2.4,-4.9,6.6),decks:V3(2.8,-0.6,8.9),landscape:V3(-3.5,-6.4,1.8),servantsQuarter:V3(-3.9,14.0,2.9)};
+  const anchors={groundFloor:V3(-1.6,-3.2,1.9),firstFloor:V3(2.6,-3.0,5.3),secondFloor:V3(-1.0,2.3,9.3),facade:V3(-4.0,-4.1,6.9),decks:V3(2.4,-0.4,8.2),landscape:V3(-3.6,-5.6,1.3),servantsQuarter:V3(-3.0,14.4,3.7)};
   const hud=document.querySelector(".scene-hud");
   Object.keys(anchors).forEach(id=>{const z=villaData.zones[id];const el=document.createElement("button");el.type="button";el.className="hotspot";el.dataset.for=id;el.innerHTML='<span class="dot '+stageDot[z.stage]+'"></span><span class="nm">'+z.name+'</span><span class="pc">'+(z.progress===100?"Ready":z.progress+"%")+'</span>';el.addEventListener("click",ev=>{ev.stopPropagation();camera.useAutoRotationBehavior=false;openZone(id);});hud.appendChild(el);});
-  function updateHotspots(){const w=host.clientWidth,h=host.clientHeight;const vp=camera.viewport.toGlobal(w,h);const tm=scene.getTransformMatrix();Object.keys(anchors).forEach(id=>{const p=BABYLON.Vector3.Project(anchors[id],BABYLON.Matrix.Identity(),tm,vp);const behind=p.z<0||p.z>1;const el=hud.querySelector('.hotspot[data-for="'+id+'"]');el.style.transform="translate(-50%,-50%) translate("+p.x+"px,"+p.y+"px)";el.style.opacity=behind?0:"";el.style.pointerEvents=behind?"none":"auto";});}
+  /* a zone's label hides while the villa stands between it and the camera (e.g. the
+     servant quarter behind the house); checked a few times a second, not every frame */
+  const occluded={};let occAt=0;
+  const seeThrough=new Set(["glass","scaffold","board","rebar","curtain"]);   // never hide a label behind these
+  const occluder=m=>m.isPickable&&m.__zone!==undefined&&m.isEnabled()&&m.visibility>0.5&&!(m.material&&seeThrough.has(m.material.name));
+  function updateOcclusion(){const cam=camera.globalPosition||camera.position;Object.keys(anchors).forEach(id=>{const d=anchors[id].subtract(cam),len=d.length();
+    const hit=scene.pickWithRay(new BABYLON.Ray(cam,d.scale(1/len),len-0.6),occluder);occluded[id]=!!(hit&&hit.hit);});}
+  function updateHotspots(){const w=host.clientWidth,h=host.clientHeight;const vp=camera.viewport.toGlobal(w,h);const tm=scene.getTransformMatrix();
+    const now=performance.now();if(now-occAt>220){occAt=now;updateOcclusion();}
+    Object.keys(anchors).forEach(id=>{const p=BABYLON.Vector3.Project(anchors[id],BABYLON.Matrix.Identity(),tm,vp);const hidden=p.z<0||p.z>1||occluded[id];const el=hud.querySelector('.hotspot[data-for="'+id+'"]');el.style.transform="translate(-50%,-50%) translate("+p.x+"px,"+p.y+"px)";el.style.opacity=hidden?0:"";el.style.pointerEvents=hidden?"none":"auto";});}
 
   /* ---- picking ---- */
   scene.onPointerObservable.add(pi=>{if(pi.type!==BABYLON.PointerEventTypes.POINTERTAP)return;if(host.closest(".clean-view"))return;const pick=pi.pickInfo;if(pick&&pick.hit&&pick.pickedMesh&&pick.pickedMesh.__zone){camera.useAutoRotationBehavior=false;openZone(pick.pickedMesh.__zone);}});
 
   /* ---- camera presets + floor explorer + reveal + evening ---- */
   const T=(x,y,z)=>[x,z,-y];   // Blender point -> Babylon target array
+  /* Phase 8 villa: house x -4.3..4.3, y -3.8 (balcony) .. 12.9 (rear), floors at z 0.45 / 3.9 / 7.35, roof 10.8 */
   const camTargets={
-    overall:{a:1.15,b:1.32,r:34,t:T(0,-1,4.5)},
-    front:{a:1.5708,b:1.42,r:30,t:T(0,-2,4.5)},
-    rear:{a:-1.5708,b:1.22,r:20,t:T(0,9,4)},
-    garden:{a:-0.95,b:1.05,r:20,t:T(1,13,1.5)},
-    terrace:{a:0.9,b:0.78,r:24,t:T(0,-1,7.5)}
+    overall:{a:1.15,b:1.3,r:36,t:T(0,1,5)},
+    front:{a:1.5708,b:1.42,r:32,t:T(0,-2,5)},
+    rear:{a:-1.5708,b:1.22,r:24,t:T(0,11,4.5)},
+    garden:{a:2.2,b:1.25,r:24,t:T(-3,-2,2.5)},   // front-left: lawn, verandah and the side deck, clear of the neighbour
+    terrace:{a:0.9,b:0.8,r:24,t:T(0,0.5,8)}
   };
-  const floorMap={basement:"basement",groundFloor:"groundFloor",firstFloor:"firstFloor",terrace:"decks"};
+  const floorMap={groundFloor:"groundFloor",firstFloor:"firstFloor",secondFloor:"secondFloor",terrace:"decks"};
+  const floorLift={groundFloor:0,firstFloor:1.6,secondFloor:2.4,terrace:1.6};
   const floorCam={
-    basement:{a:-2.2,b:0.75,r:15,t:T(-3.2,10.2,-1.5)},
-    groundFloor:{a:1.02,b:1.05,r:30,t:T(0,3,2)},
-    firstFloor:{a:1.02,b:0.95,r:30,t:T(0,2,6)},
-    terrace:{a:0.9,b:0.8,r:26,t:T(0,2,8)}
+    groundFloor:{a:1.02,b:0.82,r:30,t:T(0,5,1.5)},
+    firstFloor:{a:1.02,b:0.82,r:30,t:T(0,5,3.9+1.6+1)},
+    secondFloor:{a:1.02,b:0.82,r:28,t:T(0,4,7.35+2.4+1)},
+    terrace:{a:0.9,b:0.8,r:26,t:T(0,1,9)}
   };
-  const floorLift={basement:-1.0,groundFloor:0,firstFloor:1.6,terrace:1.6};
   let camAnim=null;
   function tweenCam(a,b,r,t,dur){camera.useAutoRotationBehavior=false;if(camAnim)cancelAnimationFrame(camAnim);
     let da=a-camera.alpha;da=((da+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;const aT=camera.alpha+da;
@@ -207,7 +217,8 @@ async function buildScene(){
       camera.alpha=a0+(aT-a0)*e;camera.beta=b0+(b-b0)*e;camera.radius=r0+(r-r0)*e;
       if(k<1)camAnim=requestAnimationFrame(step);})();}
   function tweenY(node,toY){const y0=node.position.y,st=performance.now(),dur=reduce?1:600;(function s(){const k=Math.min(1,(performance.now()-st)/dur),e=1-Math.pow(1-k,3);node.position.y=y0+(toY-y0)*e;if(k<1)requestAnimationFrame(s);})();}
-  function setGroupVis(id,v){(zoneMeshes[id]||[]).forEach(m=>{m.visibility=v;});}
+  // ghosted plant sprites would read as white blobs, so they hide instead of fading
+  function setGroupVis(id,v){(zoneMeshes[id]||[]).forEach(m=>{m.visibility=(v<1&&m.name.startsWith("spr_"))?0:v;});}
   function restoreGroup(id){(zoneMeshes[id]||[]).forEach(m=>{m.visibility=1;});}
 
   /* each zone shows the geometry exported for its current construction stage */
@@ -222,7 +233,7 @@ async function buildScene(){
   }
 
   /* "Explore construction": ghost the finished shell to look inside */
-  const shellMats=new Set(["stucco","charcoal","plaster","rcc","brick","glass","wood","tiles","alu"].map(n=>MATS[n]).filter(Boolean));
+  const shellMats=new Set(["stucco","tan","slate","charcoal","plaster","rcc","brick","block","glass","wood","tiles","alu"].map(n=>MATS[n]).filter(Boolean));
   let revealOn=false;
   function setReveal(on){revealOn=on;stageMeshes.forEach(m=>{if(shellMats.has(m.material))m.visibility=on?0.18:1;});}
 
@@ -243,7 +254,8 @@ async function buildScene(){
     reset(){setRing(null);if(revealOn)setReveal(false);clearFloors();floorOn=null;camera.useAutoRotationBehavior=!reduce;tweenCam(camTargets.overall.a,camTargets.overall.b,camTargets.overall.r,camTargets.overall.t,700);},
     goTo(v){const p=camTargets[v]||camTargets.overall;clearFloors();tweenCam(p.a,p.b,p.r,p.t);},
     explodeFloor(floorId){if(revealOn)setReveal(false);const focus=floorMap[floorId];if(!focus)return;floorOn=floorId;setRing(null);
-      Object.keys(zoneGroups).forEach(id=>{const on=(id===focus);if(on)restoreGroup(id);else setGroupVis(id,0.12);tweenY(zoneGroups[id],on?(floorLift[floorId]||0):0);});
+      // the focused floor loses its ceiling and the slab above it, so the rooms show from above
+      Object.keys(zoneGroups).forEach(id=>{const on=(id===focus);if(on){restoreGroup(id);(zoneMeshes[id]||[]).forEach(m=>{if(m.__lid)m.visibility=0;});}else setGroupVis(id,0.12);tweenY(zoneGroups[id],on?(floorLift[floorId]||0):0);});
       const c=floorCam[floorId];tweenCam(c.a,c.b,c.r,c.t);},
     fullVilla(){clearFloors();tweenCam(camTargets.overall.a,camTargets.overall.b,camTargets.overall.r,camTargets.overall.t);},
     setReveal(on){if(floorOn)clearFloors();setReveal(on);},

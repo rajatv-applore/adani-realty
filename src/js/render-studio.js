@@ -30,7 +30,7 @@
     try{
       const samples=+$("#rmSamples").value;
       const res=samples>=128?"1600x1000":samples>=64?"1280x800":"960x600";
-      const r=await fetch("/api/render",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({view:$("#rmView").value,engine:$("#rmEngine").value,time:$("#rmTime").value,villaNo:(villaData.property.name||"").replace(/\D/g,""),samples,res,zones:zonesPayload()})});
+      const r=await fetch("/api/render",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({view:$("#rmView").value,engine:$("#rmEngine").value,time:$("#rmTime").value,villaNo:(villaData.property.name||"").replace(/^villa\s*(no\.?\s*)?/i,""),samples,res,zones:zonesPayload()})});
       const j=await r.json();if(!j.jobId)throw new Error(j.error||"could not start render");id=j.jobId;
     }catch(e){fail("Could not start render: "+(e.message||e));return;}
     poll=setInterval(async()=>{

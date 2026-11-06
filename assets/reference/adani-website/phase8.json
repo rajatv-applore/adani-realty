@@ -1,0 +1,135 @@
+{
+  "source": {
+    "fetched": "2026-11-03",
+    "projectPage": "https://www.adanirealty.com/residential-projects/ahmedabad/the-north-park",
+    "brochurePdf": "https://www.adanirealty.com/-/media/project/realty/brochure/ahmedabad/the-north-park-brochure.ashx",
+    "masterPlan": "https://www.adanirealty.com/-/media/project/realty/residential/ahmedabad/the-north-park/north-park-master-plan.ashx",
+    "virtualTour360": "https://talleentech.in/virtualtour/northpark_vt/",
+    "note": "All figures are as published by Adani Realty and marked 'indicative' by them. Fields under 'estimates' are ours."
+  },
+
+  "project": {
+    "name": "The North Park (Phase 8)",
+    "developer": "Adani Estate Management Pvt. Ltd. (Adani Realty)",
+    "location": "Shantigram, near Vaishnodevi Circle, SG Highway, Ahmedabad 382421",
+    "gujRera": "PR/GJ/AHMEDABAD/GANDHINAGAR/Ahmedabad Urban Development Authority/RAA06343/A1R/EX1/100726/300627",
+    "villaCount": 28,
+    "configuration": "4 BHK independent villas",
+    "floors": "Ground + First + Second, with a terrace garden on the second floor. No basement.",
+    "lift": "Stainless steel hairline finish MRL lift serving G+1+2",
+    "possessionDate": "2027-10-30",
+    "reraCarpetAreaSqFt": [3374.81, 3791.26],
+    "projectAreaSqM": 16862.8
+  },
+
+  "villas": [
+    "D-15", "D-16", "D-17", "D-18", "D-18A", "D-19", "D-19A", "D-20", "D-20A",
+    "D-21", "D-21A", "D-22", "D-23", "D-24", "D-25", "D-26", "D-27", "D-28",
+    "D-30", "D-31", "D-32", "D-33", "D-33A", "D-34A", "D-35", "D-36", "D-37", "D-38"
+  ],
+  "villasNote": "Read from the Phase 8 outline on the master plan (see phase8-villas-zoom.jpg). Which villa is which type is NOT published.",
+
+  "types": {
+    "B": {
+      "reraCarpetSqM": 324.83,
+      "plan": "unit-plans/type-B.jpg",
+      "layout": "Parking and side passage on the right (looking from the street).",
+      "rooms": [
+        { "no": 1,  "name": "Entrance verandah",          "floor": "G",  "w": 2.06, "d": 0.94 },
+        { "no": 2,  "name": "Foyer",                      "floor": "G",  "w": 3.44, "d": 2.14 },
+        { "no": 3,  "name": "Drawing room",               "floor": "G",  "w": 4.59, "d": 5.18 },
+        { "no": 4,  "name": "Verandah",                   "floor": "G",  "w": 4.29, "d": 1.00 },
+        { "no": 5,  "name": "Powder toilet",              "floor": "G",  "w": 1.47, "d": 1.54 },
+        { "no": 6,  "name": "Dining & family",            "floor": "G",  "w": 5.19, "d": 5.48 },
+        { "no": 7,  "name": "Deck",                       "floor": "G",  "w": 2.15, "d": 5.88 },
+        { "no": 8,  "name": "Puja room",                  "floor": "G",  "w": 1.83, "d": 1.29 },
+        { "no": 9,  "name": "Lift",                       "floor": "all", "w": 1.58, "d": 1.80 },
+        { "no": 10, "name": "Kitchen",                    "floor": "G",  "w": 2.83, "d": 4.48 },
+        { "no": 11, "name": "Store",                      "floor": "G",  "w": 1.53, "d": 1.22 },
+        { "no": 12, "name": "Wash",                       "floor": "G",  "w": 2.38, "d": 1.00 },
+        { "no": 13, "name": "Guest bedroom",              "floor": "G",  "w": 3.56, "d": 4.48 },
+        { "no": 14, "name": "Toilet",                     "floor": "G",  "w": 1.53, "d": 2.14 },
+        { "no": 15, "name": "Servant room",               "floor": "G",  "w": 2.28, "d": 2.15 },
+        { "no": 16, "name": "Servant toilet",             "floor": "G",  "w": 1.91, "d": 1.00 },
+        { "no": 17, "name": "Hand wash",                  "floor": "G",  "w": 1.35, "d": 1.00 },
+        { "no": 18, "name": "Store below staircase",      "floor": "G",  "w": 1.00, "d": null },
+        { "no": 19, "name": "Lounge / library / study",   "floor": "1",  "w": 5.19, "d": 5.48 },
+        { "no": 20, "name": "Store",                      "floor": "1",  "w": 1.83, "d": 0.95 },
+        { "no": 21, "name": "Master bedroom 1",           "floor": "1",  "w": 5.19, "d": 4.48 },
+        { "no": 22, "name": "Dress 1",                    "floor": "1",  "w": 2.83, "d": 2.68 },
+        { "no": 23, "name": "Toilet 1",                   "floor": "1",  "w": 2.83, "d": 1.70 },
+        { "no": 24, "name": "Master bedroom 2",           "floor": "1",  "w": 5.19, "d": 4.58 },
+        { "no": 25, "name": "Dress 2",                    "floor": "1",  "w": 2.83, "d": 2.78 },
+        { "no": 26, "name": "Toilet 2",                   "floor": "1",  "w": 2.83, "d": 1.70 },
+        { "no": 27, "name": "Balcony",                    "floor": "1",  "w": 4.59, "d": 1.50 },
+        { "no": 28, "name": "Lounge",                     "floor": "2",  "w": 5.19, "d": 5.38 },
+        { "no": 29, "name": "Study area",                 "floor": "2",  "w": 1.83, "d": 0.95 },
+        { "no": 30, "name": "Store",                      "floor": "2",  "w": 1.83, "d": 0.90 },
+        { "no": 31, "name": "Master bedroom 3",           "floor": "2",  "w": 5.19, "d": 4.48 },
+        { "no": 32, "name": "Dress 3",                    "floor": "2",  "w": 2.83, "d": 2.68 },
+        { "no": 33, "name": "Toilet 3",                   "floor": "2",  "w": 2.83, "d": 1.70 },
+        { "no": 34, "name": "Terrace with artificial lawn", "floor": "2", "w": 8.33, "d": 4.68 },
+        { "no": 35, "name": "Parking",                    "floor": "site" },
+        { "no": 36, "name": "Green space",                "floor": "site" },
+        { "no": 37, "name": "Passage",                    "floor": "site" },
+        { "no": 38, "name": "Planter",                    "floor": "site" },
+        { "no": 39, "name": "Canopy",                     "floor": "site" },
+        { "no": 40, "name": "Green space",                "floor": "site", "w": 6.44, "d": 2.80 }
+      ]
+    },
+    "C": {
+      "reraCarpetSqM": 324.83,
+      "plan": "unit-plans/type-C.jpg",
+      "sameAs": "B",
+      "mirrored": true,
+      "layout": "Mirror of B: parking and side passage on the left. Room sizes identical to B."
+    },
+    "C1": {
+      "reraCarpetSqM": 315.98,
+      "plan": "unit-plans/type-C1.jpg",
+      "sameAs": "C",
+      "without": ["Servant room", "Servant toilet", "Hand wash"],
+      "layout": "Type C without the rear servant block (a planter strip instead). Rooms are renumbered 01-37 in the brochure."
+    },
+    "D": {
+      "reraCarpetSqM": null,
+      "plan": "unit-plans/type-D.jpg",
+      "rooms": null,
+      "layout": "Parking on the right like B, with a wider drawing room and a larger first-floor dressing/toilet suite. No room-size table is published."
+    },
+    "E": {
+      "reraCarpetSqM": null,
+      "plan": "unit-plans/type-E.jpg",
+      "rooms": null,
+      "layout": "Largest type: parking on the left, an extra front room on the ground floor, an extra room on the first floor and a bigger second-floor terrace. No room-size table is published."
+    }
+  },
+
+  "specifications": [
+    { "area": "Main entrance foyer", "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish", "doors": "Wooden frame, both-side veneer flush door with timber moulding and architrave", "windows": "Aluminium powder-coated" },
+    { "area": "Drawing room",        "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "Dining & family",     "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "Staircase",           "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "Guest bedroom",       "walls": "Putty and primer finish", "floor": "Large-format vitrified tiles", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "Other bedrooms",      "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "Pooja room",          "walls": "Putty and primer finish", "floor": "Italian marble", "ceiling": "Putty and primer finish" },
+    { "area": "Main kitchen",        "walls": "Vitrified tile dado up to 2 ft", "floor": "Large-format vitrified tiles", "ceiling": "Putty and primer finish", "doors": "Wooden frame, laminate flush door", "windows": "Aluminium powder-coated", "plumbing": "Vitrified top with stainless steel single-bowl sink" },
+    { "area": "Lounge / library / study", "walls": "Putty and primer finish", "floor": "Large-format vitrified tiles", "ceiling": "Putty and primer finish", "windows": "Aluminium powder-coated" },
+    { "area": "All bathrooms",       "walls": "Vitrified tiles up to door lintel", "floor": "Large-format vitrified tiles", "ceiling": "False ceiling", "windows": "Aluminium powder-coated", "sanitary": "Granite counter, wash basin, wall-hung WC, glass shower cubicle", "plumbing": "Kohler or equivalent" },
+    { "area": "Powder room",         "walls": "Italian marble up to 4 ft", "floor": "Italian marble", "ceiling": "False ceiling", "windows": "Aluminium powder-coated", "sanitary": "Wash basin and wall-hung WC", "plumbing": "Kohler or equivalent" },
+    { "area": "Servant's room",      "walls": "Putty and primer finish", "floor": "Vitrified tiles", "ceiling": "Putty and primer finish", "doors": "Wooden frame, laminate flush door", "windows": "Aluminium powder-coated" }
+  ],
+  "services": {
+    "electrical": "Modular switches, 3-phase concealed wiring, AC point in each room, MCB and ELCB, booster pump",
+    "amenities": "Health club with gym and aerobics studio, indoor sports, landscaped gardens, children's play area, senior citizen sit-out, party lawn, treated water, piped gas, solar water heater",
+    "security": "Perimeter security, smart-card access, intercom to each bungalow with entrance lobby, video door phone, CCTV across the cluster"
+  },
+
+  "facadeFromRenders": "Charcoal-grey textured plaster with sand/tan textured plaster boxes framing the balconies; wood-tone slatted soffits; glass railings with a wood-tone top rail; flat roofs with copper-tone coping; pergola and deck on the terrace garden; grooved grey cladding near the entrance; wooden main door; low compound wall with a rust-plate villa number and a wooden slat gate.",
+
+  "estimates": {
+    "plotM": [13.4, 22.4],
+    "buildingFootprintM": [8.6, 15.6],
+    "note": "Our rough reading of the Type B drawing scale (about 44 px per metre on a 1900 px copy). Get exact plot and setback sizes from the architect's CAD."
+  }
+}

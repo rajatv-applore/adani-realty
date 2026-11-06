@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>Adani Realty · Villa No. 08</title>
+<title>Adani Realty · Villa D-28</title>
 <link rel="stylesheet" href="css/fonts.css" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -57,7 +57,7 @@
       <div class="sb-filters">
         <label class="sbf grow">Client name<input type="text" id="fClient" placeholder="Search by client name or villa no."></label>
         <label class="sbf">Project<select id="fProject"><option value="all">All projects</option><option>The North Park</option></select></label>
-        <label class="sbf">Villa type<select id="fType"><option value="all">All types</option><option>4 BHK Villa</option><option>5 BHK Villa</option><option>6 BHK Villa</option></select></label>
+        <label class="sbf">Villa type<select id="fType"><option value="all">All types</option><option>4 BHK Villa</option></select></label>
         <label class="sbf">Location<select id="fLocation"><option value="all">All locations</option><option>Shantigram, Ahmedabad</option></select></label>
         <button class="sb-search" id="doSearch"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Search</button>
       </div>
@@ -90,7 +90,7 @@
       <span class="demo-chip" title="This experience uses illustrative demonstration data, not live construction records."><span class="d"></span>ILLUSTRATIVE EXPERIENCE</span>
       <div class="r-main">
         <div class="eyebrow">Presented for <b id="villaClient"></b></div>
-        <div class="t" id="resTitle">Villa No. 08</div>
+        <div class="t" id="resTitle">Villa D-28</div>
         <div class="l" id="resLoc">The North Park · Shantigram, Ahmedabad</div>
       </div>
     </div>
@@ -116,9 +116,9 @@
         <div class="floor-nav" id="floorNav" role="group" aria-label="Explore your home floor by floor">
           <div class="fn-title">Explore by floor</div>
           <button class="fn-btn" data-floor="terrace">Terrace</button>
+          <button class="fn-btn" data-floor="secondFloor">Second Floor</button>
           <button class="fn-btn" data-floor="firstFloor">First Floor</button>
           <button class="fn-btn" data-floor="groundFloor">Ground Floor</button>
-          <button class="fn-btn" data-floor="basement">Basement</button>
           <button class="fn-btn fn-full" data-floor="" disabled>Full villa</button>
         </div>
 
@@ -181,7 +181,7 @@
   <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
     <div class="drawer-head">
       <button class="drawer-close" id="drawerClose" aria-label="Close zone details"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-      <div class="e" id="drawerEyebrow">Your residence · Villa No. 08</div>
+      <div class="e" id="drawerEyebrow">Your residence · Villa D-28</div>
       <h2 id="drawerTitle">Zone</h2>
       <div class="sub" id="drawerSub"></div>
       <div class="pct"><b id="drawerPct">0</b><span>percent complete</span></div>
@@ -201,7 +201,7 @@
       <div class="rm-body">
         <div class="rm-note" id="rmNote" style="display:none;"></div>
         <div class="rm-controls">
-          <label>View<select id="rmView"><option value="hero">Hero 3/4</option><option value="front">Front</option><option value="aerial">Aerial</option><option value="pool">Rear garden</option></select></label>
+          <label>View<select id="rmView"><option value="hero">Street 3/4</option><option value="garden">Side garden</option><option value="aerial">Aerial</option><option value="plan-ground">Ground floor plan</option><option value="plan-first">First floor plan</option></select></label>
           <label>Engine<select id="rmEngine"><option value="CYCLES">Cycles (photoreal)</option><option value="EEVEE">Eevee (fast)</option></select></label>
           <label>Time<select id="rmTime"><option value="day">Day</option><option value="dusk">Evening</option></select></label>
           <label>Quality<select id="rmSamples"><option value="32">Draft · fast</option><option value="64" selected>Standard</option><option value="128">High</option></select></label>
